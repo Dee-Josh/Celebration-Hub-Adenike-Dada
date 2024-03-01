@@ -234,49 +234,92 @@
 
     <script src="./script.js"></script>
     
-    <script>
-        function sendToWhatsApp() {
-          var inputElement = document.getElementById("myInput");
-          var inputValue = inputElement.value;
+
+<script>
+  function sendToWhatsApp() {
+
+
+
+      // functions/sendToWhatsApp.js
+
+const fetch = require('node-fetch');
+
+exports.handler = async function(event, context) {
+  const { nexmoApiKey, nexmoApiSecret, to, text } = JSON.parse(event.body);
+  const nexmoUrl = 'https://messages-sandbox.nexmo.com/v1/messages';
+
+  try {
+    const response = await fetch(nexmoUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'Basic ' + Buffer.from(`${nexmoApiKey}:${nexmoApiSecret}`).toString('base64'),
+      },
+      body: JSON.stringify({
+        from: '14157386102',
+        to,
+        message_type: 'text',
+        text,
+        channel: 'whatsapp'
+      }),
+    });
+
+    const responseData = await response.json();
+    return {
+      statusCode: response.status,
+      body: JSON.stringify(responseData),
+    };
+  } catch (error) {
+    console.error('Error:', error);
+    return {
+      statusCode: 500,
+      body: JSON.stringify({ error: 'Internal Server Error' }),
+    };
+  }
+};
+
       
-          if (inputValue.trim() === "") {
-            alert("Please enter a message.");
-            return;
-          }
       
-          // Replace 'YOUR_NEXMO_API_KEY' and 'YOUR_NEXMO_API_SECRET' with your Nexmo API key and secret
-          var nexmoApiKey = '87e9c310';
-          var nexmoApiSecret = 'kvTDmEOtb2EgD2kP';
-          var toNumber = '2349074443048'; // Replace with the recipient's phone number
       
-          var nexmoUrl = 'https://messages-sandbox.nexmo.com/v1/messages';
       
-          fetch(nexmoUrl, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              'Accept': 'application/json',
-              'Authorization': 'Basic ' + btoa(nexmoApiKey + ':' + nexmoApiSecret),
-            },
-            body: JSON.stringify({
-              from: '14157386102',
-              to: toNumber,
-              message_type: 'text',
-              text: inputValue,
-              channel: 'whatsapp'
-            }),
-          })
-          .then(response => response.json())
-          .then(data => {
-            console.log('Success:', data);
-            alert("Message sent to WhatsApp!");
-          })
-          .catch((error) => {
-            console.error('Error:', error);
-            alert("Error sending message to WhatsApp. Please try again.");
-          });
-        }
-      </script>
+      
+    var inputElement = document.getElementById("myInput");
+    var inputValue = inputElement.value;
+
+    if (inputValue.trim() === "") {
+      alert("Please enter a message.");
+      return;
+    }
+
+    var nexmoApiKey = '87e9c310';
+    var nexmoApiSecret = 'kvTDmEOtb2EgD2kP';
+    var toNumber = '2349031435094'; // Replace with the recipient's phone number
+
+    fetch('/.netlify/functions/sendToWhatsApp', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        nexmoApiKey,
+        nexmoApiSecret,
+        to: toNumber,
+        text: inputValue,
+      }),
+    })
+    .then(response => response.json())
+    .then(data => {
+      console.log('Success:', data);
+      alert("Message sent to WhatsApp!");
+    })
+    .catch((error) => {
+      console.error('Error:', error);
+      alert("Error sending message to WhatsApp. Please try again.");
+    });
+  }
+</script>
+
     
 </body>
 </html>
