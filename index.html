@@ -42,7 +42,7 @@
         <div class="container"> 
             <h1>
                 <span>Happy Birthday</span> <br>
-                Pst. (Dr.) Adenike <br> Margaret Dada. <br> March 2
+                Pst. (Dr.) Adenike <br> Margret Dada. <br> March 2
             </h1>
             <img src="./Img/9.JPG" alt="celebrant-img">
         </div>
@@ -138,7 +138,7 @@
                         <div class="wish-details">
                             <h3 class="wish-name">Toluwa Dada</h3>
                             <p class="wish-date">March 2</p>
-                            <p class="wish-info">It's a unique day🥰, celebrating a very unique man🤩...
+                            <p class="wish-info">It's a unique day🥰, celebrating a very unique woman🤩...
                                 The one man I love and adore🥳. A great mentor and an all round father . The best father to his children 💙 and the loveliest husband to his wife 💝 . A father to many and a caring and selfless man.
                                 No write-up or epistle can truly describe how great and special to me and all you interact with.🥺🥰
                                 I will always love you as a dad and will want you again if there were another life🚶😅
@@ -152,10 +152,10 @@
                 
                 <div class="enter-wish">
                     <h2>Enter Your Wish</h2>
-                    <textarea class="wish-text"></textarea>
+                    <textarea class="wish-text" id="myInput"></textarea>
                     <input type="text" placeholder="Enter your name">
                     <div class="btn-ctnr">
-                        <button class="sub-btn">Submit</button>
+                        <button class="sub-btn" onclick="sendToWhatsApp()">Submit</button>
                     </div>
                 </div>
             </div>
@@ -233,5 +233,50 @@
     
 
     <script src="./script.js"></script>
+    
+    <script>
+        function sendToWhatsApp() {
+          var inputElement = document.getElementById("myInput");
+          var inputValue = inputElement.value;
+      
+          if (inputValue.trim() === "") {
+            alert("Please enter a message.");
+            return;
+          }
+      
+          // Replace 'YOUR_NEXMO_API_KEY' and 'YOUR_NEXMO_API_SECRET' with your Nexmo API key and secret
+          var nexmoApiKey = '87e9c310';
+          var nexmoApiSecret = 'kvTDmEOtb2EgD2kP';
+          var toNumber = '2349074443048'; // Replace with the recipient's phone number
+      
+          var nexmoUrl = 'https://messages-sandbox.nexmo.com/v1/messages';
+      
+          fetch(nexmoUrl, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Accept': 'application/json',
+              'Authorization': 'Basic ' + btoa(nexmoApiKey + ':' + nexmoApiSecret),
+            },
+            body: JSON.stringify({
+              from: '14157386102',
+              to: toNumber,
+              message_type: 'text',
+              text: inputValue,
+              channel: 'whatsapp'
+            }),
+          })
+          .then(response => response.json())
+          .then(data => {
+            console.log('Success:', data);
+            alert("Message sent to WhatsApp!");
+          })
+          .catch((error) => {
+            console.error('Error:', error);
+            alert("Error sending message to WhatsApp. Please try again.");
+          });
+        }
+      </script>
+    
 </body>
 </html>
