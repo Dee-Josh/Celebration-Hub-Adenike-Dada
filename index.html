@@ -42,7 +42,7 @@
         <div class="container"> 
             <h1>
                 <span>Happy Birthday</span> <br>
-                Pst. (Dr.) Adenike <br> Margret Dada. <br> March 2
+                Pst. (Dr.) Adenike <br> Margaret Dada. <br> March 2
             </h1>
             <img src="./Img/9.JPG" alt="celebrant-img">
         </div>
@@ -138,7 +138,7 @@
                         <div class="wish-details">
                             <h3 class="wish-name">Toluwa Dada</h3>
                             <p class="wish-date">March 2</p>
-                            <p class="wish-info">It's a unique day🥰, celebrating a very unique woman🤩...
+                            <p class="wish-info">It's a unique day🥰, celebrating a very unique man🤩...
                                 The one man I love and adore🥳. A great mentor and an all round father . The best father to his children 💙 and the loveliest husband to his wife 💝 . A father to many and a caring and selfless man.
                                 No write-up or epistle can truly describe how great and special to me and all you interact with.🥺🥰
                                 I will always love you as a dad and will want you again if there were another life🚶😅
@@ -152,10 +152,10 @@
                 
                 <div class="enter-wish">
                     <h2>Enter Your Wish</h2>
-                    <textarea class="wish-text" id="myInput"></textarea>
+                    <textarea class="wish-text"></textarea>
                     <input type="text" placeholder="Enter your name">
                     <div class="btn-ctnr">
-                        <button class="sub-btn" onclick="sendToWhatsApp()">Submit</button>
+                        <button class="sub-btn">Submit</button>
                     </div>
                 </div>
             </div>
@@ -233,109 +233,5 @@
     
 
     <script src="./script.js"></script>
-    
-
-<script>
-  function sendToWhatsApp() {
-
-
-
-      // functions/sendToWhatsApp.js
-
-// functions/sendToWhatsApp.js
-
-
-// Check if running in a Node.js environment
-if (typeof exports === 'object' && typeof module !== 'undefined') {
-  // Running in Node.js environment
-  const fetch = require('node-fetch');
-
-  exports.handler = async function (event, context) {
-    const { nexmoApiKey, nexmoApiSecret, to, text } = JSON.parse(event.body);
-    const nexmoUrl = 'https://messages-sandbox.nexmo.com/v1/messages';
-
-    try {
-      const response = await fetch(nexmoUrl, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json',
-          'Authorization': 'Basic ' + Buffer.from(`${nexmoApiKey}:${nexmoApiSecret}`).toString('base64'),
-        },
-        body: JSON.stringify({
-          from: '14157386102',
-          to,
-          message_type: 'text',
-          text,
-          channel: 'whatsapp'
-        }),
-      });
-
-      const responseData = await response.json();
-      return {
-        statusCode: response.status,
-        body: JSON.stringify(responseData),
-      };
-    } catch (error) {
-      console.error('Error:', error);
-      return {
-        statusCode: 500,
-        body: JSON.stringify({ error: 'Internal Server Error' }),
-      };
-    }
-  };
-} else {
-  // Running in a browser environment, provide a dummy implementation or handle accordingly
-  console.warn('Running in a browser environment. Netlify Functions are meant for server-side execution.');
-  exports.handler = async function (event, context) {
-    return {
-      statusCode: 500,
-      body: JSON.stringify({ error: 'Internal Server Error' }),
-    };
-  };
-}
-
-      
-      
-      
-      
-      
-    var inputElement = document.getElementById("myInput");
-    var inputValue = inputElement.value;
-
-    if (inputValue.trim() === "") {
-      alert("Please enter a message.");
-      return;
-    }
-
-    var nexmoApiKey = '87e9c310';
-    var nexmoApiSecret = 'kvTDmEOtb2EgD2kP';
-    var toNumber = '2349031435094'; // Replace with the recipient's phone number
-
-    fetch('/.netlify/functions/sendToWhatsApp', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        nexmoApiKey,
-        nexmoApiSecret,
-        to: toNumber,
-        text: inputValue,
-      }),
-    })
-    .then(response => response.json())
-    .then(data => {
-      console.log('Success:', data);
-      alert("Message sent to WhatsApp!");
-    })
-    .catch((error) => {
-      console.error('Error:', error);
-      alert("Error sending message to WhatsApp. Please try again.");
-    });
-  }
-</script>
-
-    
 </body>
 </html>
