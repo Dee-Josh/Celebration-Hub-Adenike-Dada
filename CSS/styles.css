@@ -221,8 +221,9 @@ h3{
 
 .welcome-display{
   height: 49vh;
-  background: linear-gradient(#4a1d1867, #4a1d185b), url(/Birthday_1/Img/bg-1.jpg);
+  background: linear-gradient(#4a1d1867, #4a1d185b), url(/Img/bg-1.jpg);
   background: linear-gradient(rgba(0, 0, 0, 0.915), rgba(56, 48, 2, 0.877)), url(/Birthday_1/Img/bg-1.jpg);
+  background: linear-gradient(rgba(0, 0, 0, 0.915), rgba(56, 48, 2, 0.877)), url(/Img/bg-1.jpg);
   background-repeat: no-repeat;
   background-size: cover;
   /* background-position: center; */
