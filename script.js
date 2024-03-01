@@ -214,3 +214,34 @@ defaultPlay.addEventListener('click', ()=>{
     defaultPlay.classList.toggle('fa-volume-up');
     defaultPlay.classList.toggle('fa-volume-mute');
 })
+
+
+// FOR SUBMITING WISHES
+
+const submitBtn = document.querySelector('.sub-btn');
+const wishText = document.querySelector('.wish-text');
+const nameW = document.querySelector('.enter-wish input'); 
+const wishContainer = document.querySelector('.wishes'); 
+
+submitBtn.addEventListener("click", ()=>{
+    let text = wishText.value;
+    let theName = nameW.value;
+    let totalDetails = `
+    <div class="wish-container">
+        <i class="fa-solid fa-cake"></i>
+        <div class="wish-details">
+            <h3 class="wish-name">${theName}</h3>
+            <p class="wish-date">March 2</p>
+            <p class="wish-info">${text}</p>
+        </div>
+    </div>
+    `
+
+    wishContainer.innerHTML+= totalDetails;
+    localStorage.setItem("data", totalDetails);
+    wishText.value="";
+    nameW.value="";
+})
+
+let totalDetails = localStorage.getItem("data");
+totalDetails && (wishContainer.innerHTML+= totalDetails);
