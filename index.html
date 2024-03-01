@@ -242,7 +242,7 @@
 
       // functions/sendToWhatsApp.js
 
-const fetch = require('node-fetch');
+// functions/sendToWhatsApp.js
 
 exports.handler = async function(event, context) {
   const { nexmoApiKey, nexmoApiSecret, to, text } = JSON.parse(event.body);
@@ -254,7 +254,7 @@ exports.handler = async function(event, context) {
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
-        'Authorization': 'Basic ' + Buffer.from(`${nexmoApiKey}:${nexmoApiSecret}`).toString('base64'),
+        'Authorization': 'Basic ' + btoa(`${nexmoApiKey}:${nexmoApiSecret}`),
       },
       body: JSON.stringify({
         from: '14157386102',
